@@ -1,3 +1,4 @@
+```python
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -62,6 +63,12 @@ if uploaded_file is not None:
         sep=";"
     )
 
+    # Remove accidental unnamed columns if present
+    data = data.loc[
+        :,
+        ~data.columns.astype(str).str.contains("^Unnamed")
+    ]
+
     st.success("Dataset uploaded successfully!")
 
 
@@ -95,10 +102,21 @@ if uploaded_file is not None:
     # TARGET COLUMN
     # =====================================================
 
-    target_column = st.sidebar.selectbox(
-        "Select Target Column",
-        data.columns
-    )
+    # Bank Marketing dataset uses "y" as the target
+    if "y" in data.columns:
+
+        target_column = "y"
+
+        st.sidebar.write(
+            "Target Column: **y**"
+        )
+
+    else:
+
+        target_column = st.sidebar.selectbox(
+            "Select Target Column",
+            data.columns
+        )
 
 
     # =====================================================
@@ -258,6 +276,12 @@ if uploaded_file is not None:
 
             plt.close(fig)
 
+        else:
+
+            st.info(
+                "Correlation matrix is not available for this dataset."
+            )
+
 
         # =================================================
         # PREPROCESSING
@@ -304,7 +328,9 @@ if uploaded_file is not None:
         )
 
 
-        # Suitability chart
+        # =================================================
+        # SUITABILITY CHART
+        # =================================================
 
         fig, ax = plt.subplots()
 
@@ -611,8 +637,13 @@ if uploaded_file is not None:
         )
 
 
+# =========================================================
+# NO DATASET MESSAGE
+# =========================================================
+
 else:
 
     st.info(
         "👈 Upload a CSV dataset from the sidebar to begin."
     )
+```
