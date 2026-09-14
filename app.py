@@ -11,8 +11,69 @@ from autoclassify import AutoClassify
 
 st.set_page_config(
     page_title="AutoClassify",
-    page_icon="🤖",
     layout="wide"
+)
+
+
+# =========================================================
+# CUSTOM LIGHT BLUE THEME
+# =========================================================
+
+st.markdown(
+    """
+    <style>
+
+    /* Main background */
+    .stApp {
+        background-color: #EAF6FF;
+    }
+
+    /* Main title */
+    h1 {
+        color: #0B4F8A;
+        font-weight: 700;
+    }
+
+    /* Section headings */
+    h2 {
+        color: #1261A0;
+    }
+
+    h3 {
+        color: #1976B9;
+    }
+
+    /* Sidebar */
+    section[data-testid="stSidebar"] {
+        background-color: #D6EEFF;
+    }
+
+    /* Buttons */
+    .stButton > button {
+        background-color: #1976D2;
+        color: white;
+        border-radius: 8px;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+    }
+
+    .stButton > button:hover {
+        background-color: #0D5FA5;
+        color: white;
+    }
+
+    /* Metric boxes */
+    div[data-testid="stMetric"] {
+        background-color: #D9F0FF;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #B8DFFF;
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
 )
 
 
@@ -20,7 +81,7 @@ st.set_page_config(
 # HEADER
 # =========================================================
 
-st.title("🤖 AutoClassify")
+st.title("AutoClassify")
 
 st.subheader(
     "Intelligent Dataset-Aware Classification Algorithm Selection"
@@ -62,7 +123,7 @@ if uploaded_file is not None:
         sep=";"
     )
 
-    # Remove accidental unnamed columns if present
+    # Remove accidental unnamed columns
     data = data.loc[
         :,
         ~data.columns.astype(str).str.contains("^Unnamed")
@@ -75,7 +136,7 @@ if uploaded_file is not None:
     # DATASET PREVIEW
     # =====================================================
 
-    st.header("📂 Dataset Preview")
+    st.header("Dataset Preview")
 
     st.dataframe(
         data.head(10),
@@ -101,7 +162,7 @@ if uploaded_file is not None:
     # TARGET COLUMN
     # =====================================================
 
-    # Bank Marketing dataset uses "y" as the target
+    # Bank Marketing uses "y" as the target column
     if "y" in data.columns:
 
         target_column = "y"
@@ -123,7 +184,7 @@ if uploaded_file is not None:
     # =====================================================
 
     run_analysis = st.sidebar.button(
-        "🚀 Run AutoClassify"
+        "Run AutoClassify"
     )
 
 
@@ -161,7 +222,7 @@ if uploaded_file is not None:
         # DATASET PROFILE
         # =================================================
 
-        st.header("1️⃣ Dataset Profile")
+        st.header("1. Dataset Profile")
 
         profile = result["profile"]
 
@@ -287,7 +348,7 @@ if uploaded_file is not None:
         # =================================================
 
         st.header(
-            "2️⃣ Automated Preprocessing"
+            "2. Automated Preprocessing"
         )
 
         for decision in result[
@@ -305,7 +366,7 @@ if uploaded_file is not None:
         # =================================================
 
         st.header(
-            "3️⃣ Algorithm Suitability Analysis"
+            "3. Algorithm Suitability Analysis"
         )
 
         scores = result[
@@ -365,7 +426,7 @@ if uploaded_file is not None:
 
 
         st.subheader(
-            "🎯 Analytical Prediction"
+            "Analytical Prediction"
         )
 
         st.info(
@@ -401,7 +462,7 @@ if uploaded_file is not None:
         # =================================================
 
         st.header(
-            "4️⃣ Experimental Validation"
+            "4. Experimental Validation"
         )
 
 
@@ -502,7 +563,7 @@ if uploaded_file is not None:
         # =================================================
 
         st.header(
-            "5️⃣ SVM Hyperparameter Experiment"
+            "5. SVM Hyperparameter Experiment"
         )
 
 
@@ -531,7 +592,7 @@ if uploaded_file is not None:
         # =================================================
 
         st.header(
-            "6️⃣ Final Recommendation"
+            "6. Final Recommendation"
         )
 
 
@@ -571,7 +632,7 @@ if uploaded_file is not None:
         if prediction_confirmed:
 
             st.success(
-                "✅ Prediction Status: CONFIRMED"
+                "Prediction Status: CONFIRMED"
             )
 
             st.write(
@@ -584,7 +645,7 @@ if uploaded_file is not None:
         else:
 
             st.warning(
-                "⚠️ Prediction Status: NOT CONFIRMED"
+                "Prediction Status: NOT CONFIRMED"
             )
 
             st.write(
@@ -616,7 +677,7 @@ if uploaded_file is not None:
         # =================================================
 
         st.header(
-            "7️⃣ Explainable Recommendation"
+            "7. Explainable Recommendation"
         )
 
 
@@ -643,6 +704,6 @@ if uploaded_file is not None:
 else:
 
     st.info(
-        "👈 Upload a CSV dataset from the sidebar to begin."
+        "Upload a CSV dataset from the sidebar to begin."
     )
 
