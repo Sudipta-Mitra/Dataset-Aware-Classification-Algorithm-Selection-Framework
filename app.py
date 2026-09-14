@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -646,4 +645,4 @@ else:
     st.info(
         "👈 Upload a CSV dataset from the sidebar to begin."
     )
-```
+
